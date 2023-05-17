@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.javaOracleWebix.mapper.CountRoleMapper">
+
+	<resultMap type="com.javaOracleWebix.model.CountRole" 
+			   id="CountRoleMap">
+		<result column="ROLEID" property="roleId"/>
+		<result column="ROLENAME" property="roleName"/>
+		<result column="COUNT" property="count"/>
+	</resultMap>
+	<select id="countRole" resultMap="CountRoleMap">
+		SELECT U.ROLEID
+               , R.ROLENAME
+               , COUNT(*) AS "COUNT"
+		FROM SYSTEM.F5_INV_HR_USER U LEFT JOIN SYSTEM.F5_INV_HR_ROLE R ON U.ROLEID = R.ROLEID
+		WHERE 1 = 1
+		GROUP BY U.ROLEID
+               , R.ROLENAME
+	</select>
+</mapper>

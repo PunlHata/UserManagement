@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper 
+	namespace="com.javaOracleWebix.mapper.UserMapper">
+	
+	<resultMap type="com.javaOracleWebix.model.User"
+			   id="UserMap">
+		<result column="MAKH" property="idUser"/>
+		<result column="TENKH" property="nameUser"/>
+		<result column="DIACHI" property="adrr"/>
+		<result column="MAIL" property="email"/>
+		<result column="PHONE" property="phone"/>
+		<result column="IMAGE" property="image"/>
+		<result column="BIRTHDAY" property="date"/>
+		<result column="ISUSE" property="isUse"/>
+		<result column="ROLEID" property="roleId"/>		
+		<result column="ROLENAME" property="roleName"/> 	
+	</resultMap>
+	
+	<select id="getAll" resultMap="UserMap">
+		SELECT U.MAKH
+               , U.TENKH
+               , U.DIACHI
+               , U.MAIL
+               , U.PHONE
+               , U.IMAGE
+               , U.BIRTHDAY
+               , U.ISUSE
+               , U.ROLEID
+               , R.ROLENAME
+		FROM SYSTEM.F5_INV_HR_USER U LEFT JOIN SYSTEM.F5_INV_HR_ROLE R ON U.ROLEID = R.ROLEID
+		WHERE 1 = 1
+		ORDER BY U.MAKH
+	</select>
+	
+	<select id="maxUserId" resultType="int">
+		SELECT MAX(MAKH)
+		FROM SYSTEM.F5_INV_HR_user
+		WHERE 1 = 1
+	</select>
+	
+	<select id="getUserById" resultMap="UserMap">
+		SELECT MAKH
+               , TENKH
+               , DIACHI
+               , MAIL
+               , PHONE
+               , IMAGE
+               , BIRTHDAY
+               , ISUSE
+               , ROLEID
+		FROM SYSTEM.F5_INV_HR_USER
+		WHERE 1 = 1
+		  AND MAKH = #{usrId}
+	</select>
+	
+	<select id="getUserByRoleId" resultMap="UserMap">
+		SELECT MAKH
+               , TENKH
+               , DIACHI
+               , MAIL
+               , PHONE
+               , IMAGE
+               , BIRTHDAY
+               , ISUSE
+               , ROLEID
+		FROM SYSTEM.F5_INV_HR_USER
+		WHERE 1 = 1
+		  AND ROLEID = #{rolId}
+	</select>
+	
+	<update id="putUserByMaKH">
+		UPDATE SYSTEM.F5_INV_HR_USER
+		SET TENKH = #{nameUser},
+			DIACHI = #{adrr},
+			MAIL = #{email},
+			PHONE = #{phone},
+			IMAGE = #{image},
+			BIRTHDAY = #{date},
+			ISUSE = #{isUse},
+			ROLEID = #{roleId}
+		WHERE MAKH = #{idUser}
+	</update>
+	
+	<delete id="deleteUserById">
+		DELETE FROM SYSTEM.F5_INV_HR_USER
+		WHERE MAKH = #{userId}
+	</delete>
+	
+	<insert id="postUser">
+		INSERT INTO SYSTEM.F5_INV_HR_USER (MAKH
+										   , TENKH
+							               , DIACHI
+							               , MAIL
+							               , PHONE
+							               , IMAGE
+							               , BIRTHDAY
+							               , ISUSE
+							               , ROLEID)
+		VALUES (#{idUser}
+				, #{nameUser} 
+				, #{adrr}	
+				, #{email} 
+				, #{image} 
+				, #{date}
+				, #{isUse}
+				, #{roleId})
+	</insert>
+	
+</mapper>

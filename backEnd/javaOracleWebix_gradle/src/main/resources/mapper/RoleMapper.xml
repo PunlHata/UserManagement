@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.javaOracleWebix.mapper.RoleMapper">
+	
+	<resultMap type="com.javaOracleWebix.model.Role" 
+			   id="RoleMap">
+		<result column="ROLEID" property="roleID"/>
+		<result column="ROLENAME" property="roleName"/>
+		<result column="ISUSE" property="isUse"/>
+		<result column="IMAGE" property="image"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="MAXROLEID" property="maxRoleId"/>
+	</resultMap>
+	
+	<resultMap type="com.javaOracleWebix.model.Role" 
+			   id="RoleUse">
+		<result column="ROLEID" property="roleID"/>
+	</resultMap>
+	
+	<select id="getAll" resultMap="RoleMap">
+		SELECT ROLEID
+               , ROLENAME
+               , ISUSE
+               , IMAGE
+               , DESCRIPTION
+		FROM SYSTEM.F5_INV_HR_ROLE
+		WHERE 1 = 1
+	</select>
+	
+	<select id="getRoleByIsUse" resultMap="RoleUse">
+		SELECT ROLEID
+               , ROLENAME
+		FROM SYSTEM.F5_INV_HR_ROLE
+		WHERE ISUSE LIKE 'Y'
+	</select>
+	
+	<select id="maxRoleId" resultType="int">
+		SELECT MAX(ROLEID)
+		FROM SYSTEM.F5_INV_HR_ROLE
+		WHERE 1 = 1
+	</select>
+	
+	<insert id="saveNewRole">
+		INSERT INTO SYSTEM.F5_INV_HR_ROLE (ROLEID
+							               , ROLENAME
+							               , ISUSE
+							               , IMAGE
+							               , DESCRIPTION)
+		VALUES (#{roleID} 
+				, #{roleName}	
+				, #{isUse} 
+				, #{image} 
+				, #{description})		               	
+	</insert>
+	
+	<update id="putRoleById">
+		UPDATE SYSTEM.F5_INV_HR_ROLE
+		SET ROLENAME = #{roleName},
+			ISUSE = #{isUse},
+			IMAGE = #{image},
+			DESCRIPTION = #{description}
+		WHERE ROLEID = #{roleID}
+	</update>
+	
+	<delete id="deleteRoleById">
+		DELETE FROM SYSTEM.F5_INV_HR_ROLE
+		WHERE ROLEID = #{roleId}
+	</delete>
+	
+</mapper>

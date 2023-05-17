@@ -1,0 +1,26 @@
+package com.javaOracleWebix.model;
+
+import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
+	private Integer idUser;
+	private String nameUser;
+	private String adr;
+	private String email;
+	private String phone;
+	private String image;
+	private String date;
+	private char isUse;
+	private Integer roleId;
+	private String roleName;
+	private LocalDate datApi;
+}
